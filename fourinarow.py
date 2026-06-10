@@ -34,6 +34,7 @@ def list_of_slots_and_color_to_array(array: typing.List[Slot], color: str) -> ty
             return_array.append(0)
     return return_array
 
+
 class Game:
     def __init__(self):
         self.running = True
@@ -52,7 +53,7 @@ class Game:
         self.red_turn: bool = True
 
     def insert(self, column_inserted):
-        if column_inserted<0:
+        if column_inserted < 0:
             raise ValueError("Try again, that column is full or invalid.")
         column = self.col[column_inserted]
         if not column[0].is_empty():
@@ -94,6 +95,9 @@ class Game:
                 return True
         return False
 
+    def is_draw(self):
+        return all(not self.col[c][0].is_empty() for c in range(len(self.col)))
+
     def gameloop(self):
         while self.running:
             self.print_state()
@@ -105,10 +109,14 @@ class Game:
                 except ValueError:
                     print("Try again, that column is full or invalid.")
             self.turn += 1
-            if self.turn >= 7 and self.check_win(row, col):
+            if self.check_win(row, col):
                 self.print_state()
                 winner = "Blue" if self.red_turn else "Red"
                 print(f"{winner} wins!")
+                self.running = False
+            elif self.is_draw():
+                self.print_state()
+                print("It's a draw!")
                 self.running = False
 
     def training_loop(self, col):
@@ -145,3 +153,6 @@ class Game:
                 self.col[j].append(slot)
             self.rows.append(row)
         self.red_turn: bool = True
+
+
+
