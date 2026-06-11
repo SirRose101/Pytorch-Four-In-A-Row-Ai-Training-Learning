@@ -153,6 +153,3 @@ class Game:
                 self.col[j].append(slot)
             self.rows.append(row)
         self.red_turn: bool = True
-
-
-
