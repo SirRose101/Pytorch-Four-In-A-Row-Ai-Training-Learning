@@ -291,12 +291,13 @@ def generate_game(teacher_depth: int = 5):
 # ── Training ──────────────────────────────────────────────────────────────────
 
 def train(
-    num_games: int    = 10_000,   # number of self-play games to generate
+    num_games: int     = 10_000,  # number of self-play games to generate
     teacher_depth: int = 5,       # minimax depth used as the teacher
-    batch_size: int   = 256,
-    lr: float         = 1e-3,
-    report_every: int = 500,
+    batch_size: int    = 256,
+    lr: float          = 1e-3,
+    report_every: int  = 100,     # print progress every N games
 ):
+    import time
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Training on {device}")
     print(f"Generating {num_games} games at minimax depth {teacher_depth}...\n")
@@ -309,6 +310,8 @@ def train(
     # Each entry is (3×6×7 tensor, label_column).
     dataset: typing.List[typing.Tuple[torch.Tensor, int]] = []
 
+    gen_start = time.time()
+
     for game_idx in range(num_games):
         samples = generate_game(teacher_depth)
         for board, label in samples:
@@ -319,8 +322,14 @@ def train(
             dataset.append((tensor, label))
 
         if (game_idx + 1) % report_every == 0:
-            print(f"  Generated {game_idx + 1} / {num_games} games "
-                  f"({len(dataset)} positions so far)")
+            elapsed    = time.time() - gen_start
+            pace       = elapsed / (game_idx + 1)
+            remaining  = pace * (num_games - game_idx - 1)
+            mins, secs = divmod(int(remaining), 60)
+            print(f"  [{game_idx + 1:5d} / {num_games}] "
+                  f"{len(dataset):6d} positions | "
+                  f"{pace:.2f}s/game | "
+                  f"ETA {mins}m {secs:02d}s")
 
     print(f"\nDataset ready: {len(dataset)} positions.")
     print("Starting supervised training...\n")
