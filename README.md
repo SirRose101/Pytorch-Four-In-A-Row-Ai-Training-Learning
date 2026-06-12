@@ -9,3 +9,6 @@ Still, winning was not the point, the point was learning more about machine lear
 After I got Claude to generate me a minmaxing algorhythm, I tested it and it worked. But, unfortunately, it wasn't really machine learning, therefore, not what I was looking for.
 
 Later, I got the idea to make the neural network learn based on the output of the algorythm, later I was informed it is called "imitation learning". How it is going, we'll see later. Or at least, I will.
+
+The original attempt with a minmaxing with length of 5 failed. It took over a second and a half per game, and would take several hours to complete, something I wasn't willing to spend. So I lowered the training depth to 3. We'll see how it goes.
+
