@@ -2,7 +2,7 @@
 Just me trying to learn how to build AIs and machine learning in python using the pytorch library. I built the game by hand and then used mostly used Claude to generate a lot of the code to generate the code for the AI itself. Then, I'll study everything it uses.
 
 
-I started out by trying to do claude based DQL (Deep Q-Learning). Due to several reason, it failed. I tried to fix it several times, but at most I got a very bad model that was unplayable.
+I started out by trying to do claude based DQL (Deep Q-Learning). Due to several reasons, like faulty python code, and faulty pyTorch code, it failed. I tried to fix it several times, but at most I got a very bad model that was unplayable.
 
 Still, winning was not the point, the point was learning more about machine learning and how to implement it. I learned several very valuable lessons, like what a minmaxing algorhythm or a DQL is. I also learned how to work with tensors a lot better and that there are other non-linear forms of neural networks, like conv2d.
 
@@ -12,3 +12,4 @@ Later, I got the idea to make the neural network learn based on the output of th
 
 The original attempt with a minmaxing with length of 5 failed. It took over a second and a half per game, and would take several hours to complete, something I wasn't willing to spend. So I lowered the training depth to 3. We'll see how it goes.
 
+Ok... So... It was bad. Really terrible. It just tried to pillar up in the rightmost column. I think we'll have to either up the depth or give up. Upping the depth will take approximately 10 hours to complete. I don't think that is worth it. So until then. This is the end of the project building. Now I need to actually study it.
